@@ -1,0 +1,47 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: docker-build
+    args:
+      - 'build'
+      - '-t'
+      - 'asia-northeast1-docker.pkg.dev/line-halo-stats/stats-service/stats-service:latest'
+      - '-f'
+      - './cloud_run/docker/Dockerfile'
+      - '.'
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    id: docker-push
+    dir: cloud_run
+    args:
+      - 'push'
+      - 'asia-northeast1-docker.pkg.dev/line-halo-stats/stats-service/stats-service:latest'
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: cloudrun-deploy
+    dir: cloud_run
+    entrypoint: sh
+    args:
+      - '-c'
+      - |
+        gcloud \
+        beta \
+        run \
+        deploy \
+        stats-service \
+        --image \
+        asia-northeast1-docker.pkg.dev/line-halo-stats/stats-service/stats-service:latest \
+        --region \
+        asia-northeast1 \
+        --platform \
+        managed \
+        --timeout \
+        10m \
+        --ingress \
+        all \
+        --update-env-vars \
+        GCP_PROJECT=line-halo-stats,\
+        HALODOTAPI_URL=https://cryptum.halodotapi.com/games/hi/stats/players/,\
+        CRYPTUM_AUTH="Cryptum-Token GOh93ySFA2KPCmtSJUkwdq82wCrNWsstRotfUbb25ZbLzEiz8fzFslsnL710Kmjq"
+images:
+  - 'asia-northeast1-docker.pkg.dev/line-halo-stats/stats-service/stats-service:latest'
