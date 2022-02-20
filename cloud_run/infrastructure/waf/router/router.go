@@ -8,5 +8,5 @@ import (
 )
 
 func InitializePlayerStatsHandler(cfg *config.ServerConfig) handler.IPlayerStatsHandler {
-	return di.InitializePlayerStatsHandler(cfg, entity.HalodotapiURL(cfg.HalodotapiURL))
+	return di.InitializePlayerStatsHandler(cfg, entity.AutocodeURL(cfg.AutocodeURL))
 }

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/go-chi/chi"
 	"io"
 	"line-halo-stats/cloud_run/domain/entity/dialogflow_request"
@@ -52,15 +53,13 @@ func (h *PlayerStatsHandler) getAllPlayerStats(w http.ResponseWriter, r *http.Re
 		log.Infof(ctx, "dialogflow request body: %+v", string(body))
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("couldn't unmarshal data"))
-		// TODO player stats error
 		return
 	}
 
-	gt, err := dfRequest.ParseGamertag()
+	gt, err := dfRequest.ParseGamertag(ctx)
 	if err != nil {
 		log.Errorf(ctx, "couldn't parse gamertag: %+v", err)
 		w.WriteHeader(http.StatusInternalServerError)
-		// TODO player stats error
 		return
 	}
 
@@ -71,7 +70,15 @@ func (h *PlayerStatsHandler) getAllPlayerStats(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	playerStatsResponse := dialogflow_response.NewResponse(stats.String())
+	// TODO fix this
+	var res string
+	if stats.SoloDuoRank == -1 && stats.CrossplayRank == -1 {
+		res = fmt.Sprintf("%s's stats are either hidden or unavailable", stats.Gamertag)
+	} else {
+		res = stats.String()
+	}
+
+	playerStatsResponse := dialogflow_response.NewResponse(res)
 	response, err := json.Marshal(playerStatsResponse)
 	if err != nil {
 		log.Errorf(ctx, "couldn't marshal response: %+v", err)

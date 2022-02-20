@@ -1,6 +1,6 @@
 package dialogflow_response
 
-type DialogflowResponse struct {
+type DialogflowResponseBasic struct {
 	FulfillmentMessages []FulfillmentMessages `json:"fulfillmentMessages"`
 }
 
@@ -12,8 +12,8 @@ type Text struct {
 	Text []string `json:"text"`
 }
 
-func NewResponse(response string) *DialogflowResponse {
+func NewResponse(response string) *DialogflowResponseBasic {
 	fm := FulfillmentMessages{Text: Text{Text: []string{response}}}
 
-	return &DialogflowResponse{FulfillmentMessages: []FulfillmentMessages{fm}}
+	return &DialogflowResponseBasic{FulfillmentMessages: []FulfillmentMessages{fm}}
 }

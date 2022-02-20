@@ -1,6 +1,9 @@
 package entity
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type PlayerStatsParam struct {
 	KD            float64
@@ -43,9 +46,9 @@ func (s *PlayerStats) String() string {
 		s.Gamertag,
 		s.CrossplayRank,
 		s.SoloDuoRank,
-		s.KD,
-		s.KDA,
-		s.ShotAccuracy,
-		s.WinRate,
+		math.Round(s.KD*100)/100,
+		math.Round(s.KDA*100)/100,
+		math.Round(s.ShotAccuracy*100)/100,
+		math.Round(s.WinRate*100)/100,
 		s.TimePlayed)
 }
