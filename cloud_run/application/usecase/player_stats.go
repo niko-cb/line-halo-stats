@@ -14,10 +14,10 @@ type IPlayerStatsUsecase interface {
 var _ IPlayerStatsUsecase = &PlayerStatsUsecase{}
 
 type PlayerStatsUsecase struct {
-	hs service.IHalodotapiService
+	hs service.IAutocodeService
 }
 
-func NewPlayerStatsUsecase(hs service.IHalodotapiService) IPlayerStatsUsecase {
+func NewPlayerStatsUsecase(hs service.IAutocodeService) IPlayerStatsUsecase {
 	return &PlayerStatsUsecase{
 		hs: hs,
 	}

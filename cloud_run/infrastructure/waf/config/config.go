@@ -7,8 +7,8 @@ import (
 
 type ServerConfig struct {
 	GoogleCloudProject string
-	HalodotapiURL      string
-	CryptumAuth        string
+	AutocodeURL        string
+	AutocodeAuth       string
 }
 
 func NewServerConfig() *ServerConfig {
@@ -18,13 +18,13 @@ func NewServerConfig() *ServerConfig {
 	if cfg.GoogleCloudProject == "" {
 		log.Fatalln("GCP_PROJECT is not set")
 	}
-	cfg.HalodotapiURL = os.Getenv("HALODOTAPI_URL")
-	if cfg.HalodotapiURL == "" {
-		log.Fatalln("HALODOTAPI_URL_PREFIX is not set")
+	cfg.AutocodeURL = os.Getenv("AUTOCODE_URL")
+	if cfg.AutocodeURL == "" {
+		log.Fatalln("AUTOCODE_URL is not set")
 	}
-	cfg.CryptumAuth = os.Getenv("CRYPTUM_AUTH")
-	if cfg.CryptumAuth == "" {
-		log.Fatalln("CRYPTUM_AUTH is not set")
+	cfg.AutocodeAuth = os.Getenv("AUTOCODE_AUTH")
+	if cfg.AutocodeAuth == "" {
+		log.Fatalln("AUTOCODE_AUTH is not set")
 	}
 
 	return cfg

@@ -41,7 +41,7 @@ steps:
         all \
         --update-env-vars \
         GCP_PROJECT=line-halo-stats,\
-        HALODOTAPI_URL=https://cryptum.halodotapi.com/games/hi/stats/players/,\
-        CRYPTUM_AUTH="Cryptum-Token GOh93ySFA2KPCmtSJUkwdq82wCrNWsstRotfUbb25ZbLzEiz8fzFslsnL710Kmjq"
+        AUTOCODE_URL=https://halo.api.stdlib.com/infinite,\
+        AUTOCODE_AUTH="tok_dev_hWK12Wg2fwMfVgPVSub2BP14JSCJPagaQydL3mjdUPEMv3NL8ogoQBDJ1fCFbuF7"
 images:
   - 'asia-northeast1-docker.pkg.dev/line-halo-stats/stats-service/stats-service:latest'
